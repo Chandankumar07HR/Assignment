@@ -29,6 +29,8 @@ namespace Assignment4
     public string branch;
     public int[] marks = new int[5];
 
+    
+
     public Student(int rollno, string name, string classname, string semester, string branch)
     {
         this.rollno = rollno;
@@ -90,35 +92,36 @@ namespace Assignment4
         Console.WriteLine("Branch: {0}", branch);
     }
     
-        public static void Main()
-        {
-            Console.WriteLine("-----1st question output-----");
-            // Create a new Student object
-            Student student = new Student(103026, "chandan", "degree", "8", "CSE");
+    public static void Main()
+    {
+        Console.WriteLine("-----1st question output-----");
+        // Create a new Student object
+        Student student = new Student(103026, "chandan", "degree", "8", "CSE");
 
-            // Get the marks for the student
-            student.GetMarks();
+        // Get the marks for the student
+        student.GetMarks(); //using student object call get marks
 
-            // Display the result of the student
-            student.DisplayResult();
+        // Display the result of the student
+        student.DisplayResult();
             
-            // Display the details of the student.
-            student.DisplayData();
+        // Display the details of the student.
+        student.DisplayData();
 
            
-            Console.WriteLine("--------------2nd question output-------------------");
+        Console.WriteLine("--------------2nd question output-------------------");
+        //create constructor or object of Account class
+        Accounts account = new Accounts(103367, "chandan", "Savings", "d", 1000, 0);
 
-            Accounts account = new Accounts(103367, "chandan", "Savings", "d", 1000, 0);
+        // Deposit Rs. 500
+        account.Credit(500);
 
-            // Deposit Rs. 500
-            account.Credit(500);
+        // Withdraw Rs. 200
+        account.Debit(200);
 
-            // Withdraw Rs. 200
-            account.Debit(200);
+        // Show the account details
+        account.ShowData();
 
-            // Show the account details
-            account.ShowData();
-            Console.ReadLine();
+        Console.ReadLine();
         }
     }
 }
