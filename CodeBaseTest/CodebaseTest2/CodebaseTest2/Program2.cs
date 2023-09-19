@@ -59,7 +59,7 @@ namespace CodebaseTest2
             // Creating object of class Undergraduate 
             Undergraduate undergradStudent = new Undergraduate("chandan", 1030336, 60.0);
 
-            //Creating object of class Undergraduate.
+            //Creating object of class Graduate.
             Graduate gradStudent = new Graduate("kumar", 1030448, 70.0);
 
             // checking if they passed or not
