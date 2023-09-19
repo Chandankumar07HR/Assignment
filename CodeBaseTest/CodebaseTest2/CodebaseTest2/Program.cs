@@ -6,9 +6,9 @@ namespace CodebaseTest2
 {
     class Product
     {
-        public int ProductId {get;}
-        public string ProductName {get;}
-        public int Price {get;}
+        public int ProductId { set; get; }
+        public string ProductName { set; get; }
+        public int Price { set;  get; }
 
         public Product(int productId, string productName, int price)
         {
