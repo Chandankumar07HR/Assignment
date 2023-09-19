@@ -19,9 +19,9 @@ namespace Assignment5
             city = null;
         }
 
-        public Customer(string customer_id, string name, int age, string phone, string city)
+        public Customer(string customerid, string name, int age, string phone, string city)
         {
-            this.customerId = customer_id;
+            this.customerId = customerid;
             this.name = name;
             this.age = age;
             this.phone = phone;
