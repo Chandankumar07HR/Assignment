@@ -42,8 +42,8 @@ namespace CodebaseTest2
             }
 
             // Sort the products by price
-           
-            products = products.OrderBy(p => p.Price).ToList();
+
+            products.Sort(CompareProductsbyPrice);
 
             // Display the sorted products
             Console.WriteLine("Sorted Products by Price:");
@@ -52,6 +52,10 @@ namespace CodebaseTest2
                 Console.WriteLine("Product ID: " + product.ProductId + ", Product Name: " + product.ProductName + ", Price: " + product.Price);
             }
             Console.ReadLine();
+        }
+        private static int CompareProductsbyPrice(Product x, Product y)
+        {
+            return x.Price.CompareTo(y.Price);
         }
     }
    
