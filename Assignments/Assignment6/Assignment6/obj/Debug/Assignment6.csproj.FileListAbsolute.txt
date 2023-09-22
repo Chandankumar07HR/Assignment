@@ -1,0 +1,10 @@
+D:\DOTNET.ASSIGNMENT\Assignments\Assignment6\Assignment6\bin\Debug\Assignment6.exe.config
+D:\DOTNET.ASSIGNMENT\Assignments\Assignment6\Assignment6\bin\Debug\Assignment6.exe
+D:\DOTNET.ASSIGNMENT\Assignments\Assignment6\Assignment6\bin\Debug\Assignment6.pdb
+D:\DOTNET.ASSIGNMENT\Assignments\Assignment6\Assignment6\obj\Debug\Assignment6.csproj.AssemblyReference.cache
+D:\DOTNET.ASSIGNMENT\Assignments\Assignment6\Assignment6\obj\Debug\Assignment6.csproj.CoreCompileInputs.cache
+D:\DOTNET.ASSIGNMENT\Assignments\Assignment6\Assignment6\obj\Debug\Assignment6.exe
+D:\DOTNET.ASSIGNMENT\Assignments\Assignment6\Assignment6\obj\Debug\Assignment6.pdb
+D:\DOTNET.ASSIGNMENT\Assignments\Assignment6\Assignment6\bin\Debug\Concession.dll
+D:\DOTNET.ASSIGNMENT\Assignments\Assignment6\Assignment6\bin\Debug\Concession.pdb
+D:\DOTNET.ASSIGNMENT\Assignments\Assignment6\Assignment6\obj\Debug\Assignment6.csproj.CopyComplete
