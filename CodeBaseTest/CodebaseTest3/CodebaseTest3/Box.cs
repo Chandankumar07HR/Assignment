@@ -15,10 +15,10 @@ namespace CodebaseTest3
             Length = length;
             Breadth = breadth;
         }
-        public void Add(Box other)
+        public void Add(Box third)
         {
-            Length = other.Length + Length;
-            Breadth = other.Breadth + Breadth;
+            Length = third.Length + Length;
+            Breadth = third.Breadth + Breadth;
         }
 
 
