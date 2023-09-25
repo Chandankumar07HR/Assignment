@@ -33,7 +33,7 @@ namespace CodebaseTest3
     {
         public static void Main(string[] args)
         {
-            // Prompt the user to enter the length and breadth of the first box.
+            // Prompting the user to enter the length and breadth of the first box.
             Console.WriteLine("Enter the length of the first box:");
             int length1 = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("Enter the breadth of the first box:");
@@ -42,7 +42,7 @@ namespace CodebaseTest3
             // Create a new Box object with the user input.
             Box box1 = new Box(length1, breadth1);
 
-            // Prompt the user to enter the length and breadth of the second box.
+            // Prompting the user to enter the length and breadth of the second box.
             Console.WriteLine("Enter the length of the second box:");
             int length2 = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("Enter the breadth of the second box:");
