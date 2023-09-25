@@ -29,6 +29,10 @@ namespace Concession
                 Console.WriteLine($"Ticket Booked for {name} (Age: {age}) - Fare: {TotalFare}");
             }
         }
+        static void Main()
+        {
+
+        }
 
 
     }

@@ -130,8 +130,6 @@ class ConsoleUserInterface : UserInterface
 
     public void showStudentRegistrationScreen()
     {
-        
-
        //
     }
 
