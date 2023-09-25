@@ -6,21 +6,23 @@ using System.Threading.Tasks;
 
 namespace CodebaseTest3
 {
-    class Box
+    public class Box
     {
-        public int Length { get; set; }
-        public int Breadth { get; set; }
-        public Box(int length, int breadth)
+        public double Length { get; set; }
+        public double Breadth { get; set; }
+
+        public Box(double length, double breadth)
         {
             Length = length;
             Breadth = breadth;
         }
-        public void Add(Box third)
-        {
-            Length = third.Length + Length;
-            Breadth = third.Breadth + Breadth;
-        }
 
+        public static Box Add(Box box1, Box box2)
+        {
+            double length = box1.Length + box2.Length;
+            double breadth = box1.Breadth + box2.Breadth;
+            return new Box(length, breadth);
+        }
 
         public void Display()
         {
@@ -29,40 +31,30 @@ namespace CodebaseTest3
         }
     }
 
-    class Test
+    public class Test
     {
-        public static void Main(string[] args)
+        static void Main()
         {
-            // Prompting the user to enter the length and breadth of the first box.
             Console.WriteLine("Enter the length of the first box:");
-            int length1 = Convert.ToInt32(Console.ReadLine());
+            double length1 = Convert.ToDouble(Console.ReadLine());
+
             Console.WriteLine("Enter the breadth of the first box:");
-            int breadth1 = Convert.ToInt32(Console.ReadLine());
+            double breadth1 = Convert.ToDouble(Console.ReadLine());
 
-            // Create a new Box object with the user input.
-            Box box1 = new Box(length1, breadth1);
-
-            // Prompting the user to enter the length and breadth of the second box.
             Console.WriteLine("Enter the length of the second box:");
-            int length2 = Convert.ToInt32(Console.ReadLine());
+            double length2 = Convert.ToDouble(Console.ReadLine());
+
             Console.WriteLine("Enter the breadth of the second box:");
-            int breadth2 = Convert.ToInt32(Console.ReadLine());
+            double breadth2 = Convert.ToDouble(Console.ReadLine());
 
-            // Creating a new Box object with the user input.
+            Box box1 = new Box(length1, breadth1);
             Box box2 = new Box(length2, breadth2);
+            Box box3 = Box.Add(box1, box2);
 
-            // Add the two boxes together and store the result in a third box.
-            Box box3 = new Box(0, 0);
-            box3.Add(box1);
-            box3.Add(box2);
-
-            // Display the details of the third box.
-            Console.WriteLine($"The details of the third box are:");
+            Console.WriteLine("Details of the third box:");
             box3.Display();
             Console.ReadLine();
-
         }
-
     }
 
 }
