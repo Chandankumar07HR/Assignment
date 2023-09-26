@@ -11,7 +11,7 @@ namespace RemotingServer1
     {
         public string SayHello(string s)
         {
-            return "Hello" + s;
+            return "Hi" + s;
         }
         public int HighestNumber(int n1, int n2)
         {
@@ -41,7 +41,7 @@ namespace RemotingServer1
 
             //configure all known services
             RemotingConfiguration.RegisterWellKnownServiceType(typeof(Service), "OurFirstRemoteService", WellKnownObjectMode.Singleton);
-            MessageBox.Show("Server Services started at Port No: 85...");
+            MessageBox.Show("Server Services started at Port No: 80...");
             MessageBox.Show("Press any Key to Stop the Server Services..");
             Console.ReadLine();
         }

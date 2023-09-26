@@ -8,3 +8,13 @@ D:\DOTNET.ASSIGNMENT\Assignments\RemotingServer1\RemotingServer1\obj\Debug\Remot
 D:\DOTNET.ASSIGNMENT\Assignments\RemotingServer1\RemotingServer1\obj\Debug\RemotingServer1.csproj.CoreCompileInputs.cache
 D:\DOTNET.ASSIGNMENT\Assignments\RemotingServer1\RemotingServer1\obj\Debug\RemotingServer1.exe
 D:\DOTNET.ASSIGNMENT\Assignments\RemotingServer1\RemotingServer1\obj\Debug\RemotingServer1.pdb
+D:\DOTNET.ASSIGNMENT\Assignments\Assignment7\RemotingServer1\RemotingServer1\bin\Debug\RemotingServer1.exe.config
+D:\DOTNET.ASSIGNMENT\Assignments\Assignment7\RemotingServer1\RemotingServer1\bin\Debug\RemotingServer1.exe
+D:\DOTNET.ASSIGNMENT\Assignments\Assignment7\RemotingServer1\RemotingServer1\bin\Debug\RemotingServer1.pdb
+D:\DOTNET.ASSIGNMENT\Assignments\Assignment7\RemotingServer1\RemotingServer1\obj\Debug\RemotingServer1.csproj.AssemblyReference.cache
+D:\DOTNET.ASSIGNMENT\Assignments\Assignment7\RemotingServer1\RemotingServer1\obj\Debug\RemotingServer1.Service.resources
+D:\DOTNET.ASSIGNMENT\Assignments\Assignment7\RemotingServer1\RemotingServer1\obj\Debug\RemotingServer1.Properties.Resources.resources
+D:\DOTNET.ASSIGNMENT\Assignments\Assignment7\RemotingServer1\RemotingServer1\obj\Debug\RemotingServer1.csproj.GenerateResource.cache
+D:\DOTNET.ASSIGNMENT\Assignments\Assignment7\RemotingServer1\RemotingServer1\obj\Debug\RemotingServer1.csproj.CoreCompileInputs.cache
+D:\DOTNET.ASSIGNMENT\Assignments\Assignment7\RemotingServer1\RemotingServer1\obj\Debug\RemotingServer1.exe
+D:\DOTNET.ASSIGNMENT\Assignments\Assignment7\RemotingServer1\RemotingServer1\obj\Debug\RemotingServer1.pdb

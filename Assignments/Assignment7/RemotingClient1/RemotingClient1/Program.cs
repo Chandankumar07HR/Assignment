@@ -24,8 +24,14 @@ namespace RemotingClient1
 
             //"tcp://localhost:8089/OurFirstRemoteService"
             //start calling the functions of the service class
-            Console.WriteLine(service.SayHello("Remote"));
-            Console.WriteLine(service.HighestNumber(20, 25));
+            Console.WriteLine("enter service name");
+            string name = Console.ReadLine();
+            Console.WriteLine(service.SayHello("service name is "+ name));
+            Console.WriteLine("Enter the number 1: ");
+            int num1 = int.Parse(Console.ReadLine());
+            Console.WriteLine("Enter the number 2: ");
+            int num2 = int.Parse(Console.ReadLine());
+            Console.WriteLine("The highest number is"+ service.HighestNumber(num1, num2));
             Console.Read();
 
         }
