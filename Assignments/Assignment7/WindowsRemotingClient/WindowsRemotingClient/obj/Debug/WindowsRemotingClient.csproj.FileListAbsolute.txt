@@ -1,0 +1,14 @@
+D:\DOTNET.ASSIGNMENT\Assignments\Assignment7\WindowsRemotingClient\WindowsRemotingClient\bin\Debug\WindowsRemotingClient.exe.config
+D:\DOTNET.ASSIGNMENT\Assignments\Assignment7\WindowsRemotingClient\WindowsRemotingClient\bin\Debug\WindowsRemotingClient.exe
+D:\DOTNET.ASSIGNMENT\Assignments\Assignment7\WindowsRemotingClient\WindowsRemotingClient\bin\Debug\WindowsRemotingClient.pdb
+D:\DOTNET.ASSIGNMENT\Assignments\Assignment7\WindowsRemotingClient\WindowsRemotingClient\bin\Debug\RemotingServer.exe
+D:\DOTNET.ASSIGNMENT\Assignments\Assignment7\WindowsRemotingClient\WindowsRemotingClient\bin\Debug\RemotingServer.pdb
+D:\DOTNET.ASSIGNMENT\Assignments\Assignment7\WindowsRemotingClient\WindowsRemotingClient\bin\Debug\RemotingServer.exe.config
+D:\DOTNET.ASSIGNMENT\Assignments\Assignment7\WindowsRemotingClient\WindowsRemotingClient\obj\Debug\WindowsRemotingClient.csproj.AssemblyReference.cache
+D:\DOTNET.ASSIGNMENT\Assignments\Assignment7\WindowsRemotingClient\WindowsRemotingClient\obj\Debug\WindowsRemotingClient.Form1.resources
+D:\DOTNET.ASSIGNMENT\Assignments\Assignment7\WindowsRemotingClient\WindowsRemotingClient\obj\Debug\WindowsRemotingClient.Properties.Resources.resources
+D:\DOTNET.ASSIGNMENT\Assignments\Assignment7\WindowsRemotingClient\WindowsRemotingClient\obj\Debug\WindowsRemotingClient.csproj.GenerateResource.cache
+D:\DOTNET.ASSIGNMENT\Assignments\Assignment7\WindowsRemotingClient\WindowsRemotingClient\obj\Debug\WindowsRemotingClient.csproj.CoreCompileInputs.cache
+D:\DOTNET.ASSIGNMENT\Assignments\Assignment7\WindowsRemotingClient\WindowsRemotingClient\obj\Debug\WindowsRemotingClient.csproj.CopyComplete
+D:\DOTNET.ASSIGNMENT\Assignments\Assignment7\WindowsRemotingClient\WindowsRemotingClient\obj\Debug\WindowsRemotingClient.exe
+D:\DOTNET.ASSIGNMENT\Assignments\Assignment7\WindowsRemotingClient\WindowsRemotingClient\obj\Debug\WindowsRemotingClient.pdb
