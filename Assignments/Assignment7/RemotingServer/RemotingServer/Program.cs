@@ -51,15 +51,15 @@ namespace RemotingServer
         static void Main(string[] args)
         {
             //create a new channel for communication
-            HttpChannel c = new HttpChannel(85); //port number
-            //TcpChannel tc = new TcpChannel(8089);
+            //HttpChannel c = new HttpChannel(85); //port number
+            TcpChannel tc = new TcpChannel(8089);
             //register the channel
-            ChannelServices.RegisterChannel(c);
+            ChannelServices.RegisterChannel(tc);
 
             //configure all known services
             RemotingConfiguration.RegisterWellKnownServiceType(typeof(Service), "OurFirstRemoteService",
                 WellKnownObjectMode.Singleton);
-            Console.WriteLine("Server Services started at Port No: 85...");
+            Console.WriteLine("Server Services started at Port No: 8089...");
             Console.WriteLine("Press any Key to Stop the Server Services..");
             Console.ReadLine();
         }

@@ -20,8 +20,7 @@ namespace WindowsRemotingClient
         {
             InitializeComponent();
             //channel and services registration 
-            remoteobj = (Service)Activator.GetObject(typeof(Service),
-               "http://localhost:85/OurFirstRemoteService");
+            remoteobj = (Service)Activator.GetObject(typeof(Service),"tcp://localhost:8089/OurFirstRemoteService");
         }
 
         private void label1_Click(object sender, EventArgs e)
