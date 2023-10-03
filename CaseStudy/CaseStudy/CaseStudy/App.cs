@@ -77,6 +77,7 @@ class Info
         Console.WriteLine("Course Name: " + course.name);
         Console.WriteLine("Enrollment Date: " + enrollmentDate);
     }
+
 }
 
 class AppEngine
@@ -166,6 +167,17 @@ public class StudentManagementSystem : UserInterface
             case 2:
                 scenario2Screen();
                 break;
+        }
+        
+        Console.WriteLine("Do you want to go to Scenario 2? (yes/no): ");
+        string goToScenario2 = Console.ReadLine();
+        if (goToScenario2.ToLower() == "yes")
+        {
+            scenario2Screen();
+        }
+        else
+        {
+            Console.WriteLine("click any button to exit");
         }
     }
 
@@ -308,10 +320,18 @@ public class StudentManagementSystem : UserInterface
     {
         Console.WriteLine("Scenario 2");
 
-        // Display all students
-         showAllStudentsScreen();
-        // Display all courses
-        showAllCoursesScreen();
+        Console.WriteLine("All Students:");
+        foreach (Student student in appEngine.listOfStudents())
+        {
+            info.display(student);
+        }
+
+        Console.WriteLine("All Courses:");
+        foreach (Course course in appEngine.listOfCourses())
+        {
+            Console.WriteLine("Course ID: " + course.id);
+            Console.WriteLine("Course Name: " + course.name);
+        }
     }
 }
 
