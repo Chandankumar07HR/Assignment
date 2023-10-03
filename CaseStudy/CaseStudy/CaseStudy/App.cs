@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-class Student
+public class Student
 {
     public int id { get; set; }
     public string name { get; set; }
@@ -15,7 +15,7 @@ class Student
     }
 }
 
-class Course
+public class Course
 {
     public int id { get; set; }
     public string name { get; set; }
@@ -29,10 +29,9 @@ class Course
 
 class Enroll
 {
-    private Student student;
-    private Course course;
-    private DateTime enrollmentDate;
-
+    public Student student;
+    public Course course;
+    public DateTime enrollmentDate;
     public Enroll(Student student, Course course, DateTime enrollmentDate)
     {
         this.student = student;
@@ -56,7 +55,68 @@ class Enroll
     }
 }
 
-interface UserInterface
+class Info
+{
+    public void display(Student student)
+    {
+        Console.WriteLine("Student ID: " + student.id);
+        Console.WriteLine("Student Name: " + student.name);
+        Console.WriteLine("Student Date of Birth: " + student.dateOfBirth);
+    }
+
+    public void display(Enroll enrollment)
+    {
+        Student student = enrollment.GetStudent();
+        Course course = enrollment.GetCourse();
+        DateTime enrollmentDate = enrollment.GetEnrollmentDate();
+        Console.WriteLine("-------------------");
+        Console.WriteLine("Enrollment Details:");
+        Console.WriteLine("Student ID: " + student.id);
+        Console.WriteLine("Student Name: " + student.name);
+        Console.WriteLine("Course ID: " + course.id);
+        Console.WriteLine("Course Name: " + course.name);
+        Console.WriteLine("Enrollment Date: " + enrollmentDate);
+    }
+}
+
+class AppEngine
+{
+    private List<Student> students = new List<Student>();
+    private List<Course> courses = new List<Course>();
+    private List<Enroll> enrollments = new List<Enroll>();
+
+    public void introduce(Course course)
+    {
+        courses.Add(course);
+    }
+
+    public void register(Student student)
+    {
+        students.Add(student);
+    }
+
+    public Student[] listOfStudents()
+    {
+        return students.ToArray();
+    }
+
+    public Course[] listOfCourses()
+    {
+        return courses.ToArray();
+    }
+
+    public void enroll(Student student, Course course)
+    {
+        enrollments.Add(new Enroll(student, course, DateTime.Now));
+    }
+
+    public Enroll[] listOfEnrollments()
+    {
+        return enrollments.ToArray();
+    }
+}
+
+public interface UserInterface
 {
     void showFirstScreen();
     void showStudentScreen();
@@ -67,20 +127,16 @@ interface UserInterface
     void showAllCoursesScreen();
 }
 
-class ConsoleUserInterface : UserInterface
+public class StudentManagementSystem : UserInterface
 {
-    private AppEngine appEngine;
-
-    public ConsoleUserInterface(AppEngine appEngine)
-    {
-        this.appEngine = appEngine;
-    }
+     AppEngine appEngine = new AppEngine();
+     Info info = new Info();
 
     public void showFirstScreen()
     {
         Console.WriteLine("Welcome to SMS(Student Mgmt. System) v1.0");
-        Console.WriteLine("Tell us who you are : \n1. Student\n2. Admin");
-        Console.WriteLine("Enter your choice ( 1 or 2 ) : ");
+        Console.WriteLine("Tell us who you are: \n1. Student\n2. Admin");
+        Console.WriteLine("Enter your choice (1 or 2): ");
         int op = Convert.ToInt32(Console.ReadLine());
 
         switch (op)
@@ -96,70 +152,166 @@ class ConsoleUserInterface : UserInterface
 
     public void showStudentScreen()
     {
-        //Console.WriteLine("Student details: ");
-        //Console.Write("Enter student 1 Id: ");
-        //int ID1 = int.Parse(Console.ReadLine());
-        //Console.Write("Enter student 1 Name: ");
-        //string Name1 = Console.ReadLine();
-        //Console.Write("Enter Student Date Of Birth: ");
-        //DateTime DOB1 = Convert.ToDateTime(Console.ReadLine());
+        Console.WriteLine("Welcome, Student!");
+        Console.WriteLine("1. Scenario 1");
+        Console.WriteLine("2. Scenario 2");
+        Console.Write("Enter your choice: ");
+        int choice = int.Parse(Console.ReadLine());
 
-
-        //Console.Write("Enter student 2 Id: ");
-        //int ID2 = int.Parse(Console.ReadLine());
-        //Console.Write("Enter student 2 Name: ");
-        //string Name2 = Console.ReadLine();
-        //Console.Write("Enter Student Date Of Birth: ");
-        //DateTime DOB2 = Convert.ToDateTime(Console.ReadLine());
-
-        //Student s1 = new Student(ID1, Name1, DOB1);
-        //Student s2 = new Student(ID2, Name2, DOB2);
-        //appEngine.register(s1);
-        //appEngine.register(s2);
+        switch (choice)
+        {
+            case 1:
+                scenario1Screen();
+                break;
+            case 2:
+                scenario2Screen();
+                break;
+        }
     }
 
     public void showAdminScreen()
     {
-        // Implement admin screen
+ 
+        Console.WriteLine("Welcome, Admin!");
+
+        while(true)
+        {
+            Console.WriteLine("Admin Menu:");
+            Console.WriteLine("1. Register Student");
+            Console.WriteLine("2. Introduce Course");
+            Console.WriteLine("3. View All Students");
+            Console.WriteLine("4. View All Courses");
+            Console.WriteLine("5. Exit");
+
+            Console.Write("Enter your choice: ");
+            int choice = int.Parse(Console.ReadLine());
+
+            switch (choice)
+            {
+                case 1:
+                    showStudentRegistrationScreen();
+                    break;
+                case 2:
+                    introduceNewCourseScreen();
+                    break;
+                case 3:
+                    showAllStudentsScreen();
+                    break;
+                case 4:
+                    showAllCoursesScreen();
+                    break;
+                case 5:
+                    Console.WriteLine("Exiting Admin Menu.");
+                    return;
+                default:
+                    Console.WriteLine("Invalid choice, Please try again.");
+                    break;
+            }
+        }
     }
 
     public void showAllStudentsScreen()
     {
-        // Implement all students screen
+        Console.WriteLine("All Students:");
+        foreach (Student student in appEngine.listOfStudents())
+        {
+            info.display(student);
+        }
     }
 
     public void showStudentRegistrationScreen()
     {
-       //
+        Console.WriteLine("Student Registration:");
+
+        Console.Write("Enter student ID: ");
+        int ID = int.Parse(Console.ReadLine());
+        Console.Write("Enter student Name: ");
+        string Name = Console.ReadLine();
+        Console.Write("Enter Student Date Of Birth: ");
+        DateTime DOB = Convert.ToDateTime(Console.ReadLine());
+
+        Student newStudent = new Student(ID, Name, DOB);
+        appEngine.register(newStudent);
+
+        Console.WriteLine("Student registered successfully!");
     }
 
     public void introduceNewCourseScreen()
     {
-        // Implement introduce new course screen
+        Console.WriteLine("Course Introduction:");
+
+        Console.Write("Enter Course ID: ");
+        int CID = int.Parse(Console.ReadLine());
+        Console.Write("Enter Course Name: ");
+        string CName = Console.ReadLine();
+
+        Course newCourse = new Course(CID, CName);
+        appEngine.introduce(newCourse);
+
+        Console.WriteLine("Course introduced successfully!");
     }
 
     public void showAllCoursesScreen()
     {
-        // Implement all courses screen
-    }
-}
+        Console.WriteLine("All Courses:");
 
-class AppEngine
-{
-    private List<Student> students;
-    private List<Course> courses;
-    private List<Enroll> enrollments;
-
-    public AppEngine()
-    {
-        students = new List<Student>();
-        courses = new List<Course>();
-        enrollments = new List<Enroll>();
+        foreach (Course course in appEngine.listOfCourses())
+        {
+            Console.WriteLine("Course ID: " + course.id);
+            Console.WriteLine("Course Name: " + course.name);
+        }
     }
 
-    public void register(Student student)
+    public void scenario1Screen()
     {
-        students.Add(student);
+        Console.WriteLine("\n scenario1");
+        Console.WriteLine("Enter number of students:");
+        int noOfStudents = int.Parse(Console.ReadLine());
+        for (int i = 0; i < noOfStudents; i++)
+        {
+            Console.WriteLine($"Enter student {i + 1} details:");
+            Console.Write($"Enter student id :");
+            int id = int.Parse(Console.ReadLine());
+            Console.Write($"Enter student name: ");
+            string name = Console.ReadLine();
+            Console.Write($"Enter student birthdate (yyyy-MM-dd): ");
+            DateTime birthdate = DateTime.Parse(Console.ReadLine());
+
+            Student student = new Student(id, name, birthdate);
+            appEngine.register(student);
+            Console.WriteLine("------------------------------");
+
+            Console.WriteLine("Enter number of course:");
+            int noOfcourse = int.Parse(Console.ReadLine());
+            for (int j = 0; j < noOfcourse; j++)
+            {
+                Console.WriteLine($"Enter course {j + 1} details:");
+                Console.Write($"Enter course id :");
+                int cid = int.Parse(Console.ReadLine());
+                Console.Write($"Enter course name: ");
+                string cname = Console.ReadLine();
+
+                Course course = new Course(cid, cname);
+
+
+                appEngine.introduce(course);
+                appEngine.enroll(student, course);
+            }    
+        }
+        foreach (Enroll enrollment in appEngine.listOfEnrollments())
+        {
+            info.display(enrollment);
+        }
+    }
+
+    public void scenario2Screen()
+    {
+        Console.WriteLine("Scenario 2");
+
+        // Display all students
+         showAllStudentsScreen();
+        // Display all courses
+        showAllCoursesScreen();
     }
 }
 
@@ -167,9 +319,10 @@ class App
 {
     static void Main(string[] args)
     {
-        AppEngine appEngine = new AppEngine();
-        UserInterface userInterface = new ConsoleUserInterface(appEngine);
-        userInterface.showFirstScreen();
+        //StudentManagementSystem studentmanagementsystem = new StudentManagementSystem();
+        //studentmanagementsystem.showFirstScreen();
+
+        new StudentManagementSystem().showFirstScreen();
         Console.ReadLine();
     }
 }
