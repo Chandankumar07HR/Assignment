@@ -1,35 +1,33 @@
 ﻿using System;
+
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.IO;
-
 namespace CodebaseTest4
 {
-    public class AppendTextToFile
+    class AppendTextToFile
     {
-        public static void Main()
+        static void Main(string[] args)
         {
-            // Get the path of the file to append text to.
-            string filePath = @"D:\DOTNET.ASSIGNMENT\CodeBaseTest\CodebaseTest4\txt.file";
-
-            // Check if the file exists.
-            if (!File.Exists(filePath))
-            {
-                // Create a new file.
-                File.Create(filePath);
-            }
-
-            StreamWriter writer = new StreamWriter(File.Open(filePath, FileMode.Append));
-
-            // Append the text to the file.
-            writer.WriteLine("This is the text to append to the file.");
-            Console.WriteLine("The text is added to the file");
-            // Close the file.
-            writer.Close();
-            
+            program.writedata();
             Console.ReadLine();
         }
     }
+    class program
+    {
+        public static void writedata()
+        {
+            FileStream fs = new FileStream(@"D:\DOTNET.ASSIGNMENT\CodeBaseTest\CodebaseTest4\txt.file", FileMode.Append, FileAccess.Write);
+            StreamWriter sw = new StreamWriter(fs);
+            Console.WriteLine("enter the data to file");
+            string data = Console.ReadLine();
+            sw.Write(data);
+            Console.WriteLine("text added successfully");
+            sw.Close();
+            fs.Close();
+        }
+    }
+
 }

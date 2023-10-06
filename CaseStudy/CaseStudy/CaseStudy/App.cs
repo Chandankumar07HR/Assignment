@@ -174,7 +174,7 @@ namespace CaseStudy
             while (true)
             {
                 Console.WriteLine("Admin Menu:");
-                Console.WriteLine("1. Register Student");
+                Console.WriteLine("1. Register and Enroll Student for course");
                 Console.WriteLine("2. Introduce Course");
                 Console.WriteLine("3. View All Students");
                 Console.WriteLine("4. View All Courses");
