@@ -11,7 +11,7 @@ MGRID int,
 HIREDATE date,
 SAL int,
 COMM int,
-DEPTNO int
+DEPTNO int foreign key references DEPT(DEPTNO)
 )
 
 insert into EMPLOYEE values(7369, 'SMITH', 'CLERK', 7902, '17-DEC-80', 800, NULL, 20),
@@ -30,7 +30,7 @@ insert into EMPLOYEE values(7369, 'SMITH', 'CLERK', 7902, '17-DEC-80', 800, NULL
 						   (7934, 'MILLER', 'CLERK', 7782, '23-JAN-82', 1300, NULL, 10)
 
 create table DEPT (
-DEPTNO int,
+DEPTNO int primary key,
 DNAME varchar(20),
 LOC varchar(30)
 )
@@ -119,3 +119,42 @@ HAVING COUNT(*) > 2;
 SELECT EMPNAME
 FROM EMPLOYEE
 WHERE MGRID IN (SELECT MGRID FROM EMPLOYEE GROUP BY MGRID HAVING COUNT(*) > 2);
+
+create table tblAudit(
+details nvarchar(max))
+
+create or alter trigger trgAuditDelete
+on EMPLOYEE
+for delete
+as
+begin
+   declare @id int
+   select @id = EMPNO from deleted
+   --insert the deleted employee information into the audit table
+   insert into tblAudit values('Employee with EmpNO:' + cast(@id as varchar(5)) +
+   ' is deleted on :' + cast(getdate() as varchar(20)))
+end
+
+DELETE FROM EMPLOYEE WHERE EMPNO =7378;
+
+select * from tblAudit
+
+select * from EMPLOYEE
+
+ 
+
+create or alter trigger trgAuditInsert
+on EMPLOYEE
+for insert
+as
+begin
+declare @id int
+select @id=EMPNO from inserted
+--insert the newly added employee into audit table
+insert into tblAudit values('New Employee with EmpId :' + cast(@id as nvarchar(5)) +
+'  is added on :' + cast(getdate() as varchar(20)))
+end
+
+insert into EMPLOYEE values (7698, 'BLAKE', 'MANAGER', 7839, '01-MAY-81', 2850, NULL, 30)
+select * from tblAudit
+select * from Employee
