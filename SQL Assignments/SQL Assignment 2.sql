@@ -135,7 +135,7 @@ begin
    ' is deleted on :' + cast(getdate() as varchar(20)))
 end
 
-DELETE FROM EMPLOYEE WHERE EMPNO =7378;
+DELETE FROM EMPLOYEE WHERE EMPNO =(7934)
 
 select * from tblAudit
 
@@ -155,6 +155,7 @@ insert into tblAudit values('New Employee with EmpId :' + cast(@id as nvarchar(5
 '  is added on :' + cast(getdate() as varchar(20)))
 end
 
-insert into EMPLOYEE values (7698, 'BLAKE', 'MANAGER', 7839, '01-MAY-81', 2850, NULL, 30)
+insert into EMPLOYEE values (7934, 'MILLER', 'CLERK', 7782, '23-JAN-82', 1300, NULL, 10)
 select * from tblAudit
 select * from Employee
+
