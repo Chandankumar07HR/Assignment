@@ -72,13 +72,23 @@ BEGIN
    IF @Holiday_Name IS NOT NULL
    BEGIN
        ROLLBACK TRANSACTION
-        raiserror('Due to %s, you cannot manipulate data',16,1,@holiday_name)
+        raiserror('Due to %s, you cannot manipulate data',18,2,@holiday_name)
    END
 END
 
 Insert into EMPLOYEE Values(8733,'chethan','clerk',3948,'1999-9-18',8888, 700,10)
-
+delete from EMPLOYEE where EMPNO = 8733
+select * from Holiday
 select * from EMPLOYEE
+
+use SQLCodebasetestDB
+
+
+SELECT Date, COUNT(DISTINCT CustID) AS TotalCustomers
+FROM orders
+GROUP BY Date
+ORDER BY Date;
+select * from orders
 
 
 
