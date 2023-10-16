@@ -61,7 +61,7 @@ BEGIN
    IF @Holiday_Name IS NOT NULL
    BEGIN
        ROLLBACK TRANSACTION
-        raiserror('Due to %s, you cannot manipulate data',18,2,@holiday_name)
+        raiserror('Due to yugadi day you cannot manipulate data”',18,2)
    END
 END
 
