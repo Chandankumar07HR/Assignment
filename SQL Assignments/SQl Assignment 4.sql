@@ -1,24 +1,15 @@
 --1Write a T-SQL Program to find the factorial of a given number.
-
-create or alter function factorial(@number int)
-returns int
-
-as
- begin 
- declare @factorial int 
- set @factorial=1
- while @number>=1
- begin 
- set @factorial=@factorial*@number
- set @number=@number-1
- end
- return @factorial
-
- end
-
-DECLARE @result int
-SET @result = dbo.factorial(4) 
-SELECT @result AS FactorialResult
+-- here given number is =4
+declare @num int
+declare @Fact int
+set @num = 4 
+set @Fact = 1
+while @num > 1
+begin
+    set @Fact  = @Fact  * @num
+    set @num = @num - 1
+end
+select @fact as factorial
 
 
 
@@ -42,6 +33,7 @@ multiplication 7
 --Create a trigger to restrict data manipulation on EMP table during General holidays. Display the error message like “Due to Independence day you cannot manipulate data” or "Due To Diwali", you cannot manupulate" etc
 
 --Note: Create holiday table as (holiday_date,Holiday_name) store at least 4 holiday details. try to match and stop manipulation 
+
 CREATE TABLE Holiday
 (
 Holiday_date DATE PRIMARY KEY,
@@ -52,10 +44,7 @@ INSERT INTO Holiday VALUES
 ('2023-02-08', 'Dipavali'),
 ('2022-03-22', 'Ganesha Chathurthi'),
 ('2021-02-28', 'Yugadi'),
-('2021-02-26', 'Yugadi'),
 ('2020-06-23', 'Bhakrid');
-
-
 
 CREATE OR ALTER TRIGGER RestrictData
 ON EMPLOYEE
@@ -77,18 +66,9 @@ BEGIN
 END
 
 Insert into EMPLOYEE Values(8733,'chethan','clerk',3948,'1999-9-18',8888, 700,10)
-delete from EMPLOYEE where EMPNO = 8733
 select * from Holiday
-select * from EMPLOYEE
-
-use SQLCodebasetestDB
 
 
-SELECT Date, COUNT(DISTINCT CustID) AS TotalCustomers
-FROM orders
-GROUP BY Date
-ORDER BY Date;
-select * from orders
 
 
 
