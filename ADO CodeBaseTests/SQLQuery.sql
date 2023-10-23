@@ -18,10 +18,8 @@ AS
 BEGIN
    DECLARE @empno int;
 
-   -- Generate a new employee number
    SELECT @empno = ISNULL(MAX(empno), 0) + 1 FROM Code_Employee;
 
-   -- Insert the new employee record
    INSERT INTO Code_Employee (empno, empname, empsal, emptype)
    VALUES (@empno, @empname, @empsal, @emptype);
 END;

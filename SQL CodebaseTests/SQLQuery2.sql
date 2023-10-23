@@ -8,14 +8,14 @@ DECLARE
  @EMPNO INT,
  @SALARY INT;
 
-DECLARE cursor_employee CURSOR FOR
+DECLARE cursor_Program CURSOR FOR
  SELECT EMPNO, SAL
  FROM EMPLOYEE
  WHERE DEPTNO = 10; 
 
-OPEN cursor_employee;
+OPEN cursor_Program;
 
-FETCH NEXT FROM cursor_employee INTO @EMPNO, @SALARY;
+FETCH NEXT FROM cursor_Program INTO @EMPNO, @SALARY;
 
 WHILE @@FETCH_STATUS = 0
 BEGIN
@@ -26,8 +26,8 @@ BEGIN
  SET SAL = @SALARY
  WHERE EMPNO = @EMPNO;
 
- FETCH NEXT FROM cursor_employee INTO @EMPNO, @SALARY;
+ FETCH NEXT FROM cursor_Program INTO @EMPNO, @SALARY;
 END;
 
-CLOSE cursor_employee;
-DEALLOCATE cursor_employee;
+CLOSE cursor_Program;
+DEALLOCATE cursor_Program;
