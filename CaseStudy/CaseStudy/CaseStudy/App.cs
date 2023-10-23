@@ -1,8 +1,23 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace CaseStudy
 {
+    class App
+    {
+        static void Main(string[] args)
+        {
+            new StudentManagementSystem().showFirstScreen();
+            Console.ReadLine();
+        }
+    }
+   
     public class Student
     {
         public int id { get; set; }
@@ -41,85 +56,9 @@ namespace CaseStudy
             this.enrollmentDate = enrollmentDate;
         }
 
-        public Student GetStudent()
-        {
-            return student;
-        }
-
-        public Course GetCourse()
-        {
-            return course;
-        }
-
-        public DateTime GetEnrollmentDate()
-        {
-            return enrollmentDate;
-        }
     }
 
-    class Info
-    {
-        public void display(Student student)
-        {
-            Console.WriteLine("Student ID: " + student.id);
-            Console.WriteLine("Student Name: " + student.name);
-            Console.WriteLine("Student Date of Birth: " + student.dateOfBirth);
-        }
-
-        public void display(Enroll enrollment)
-        {
-            Student student = enrollment.GetStudent();
-            Course course = enrollment.GetCourse();
-            DateTime enrollmentDate = enrollment.GetEnrollmentDate();
-            Console.WriteLine("-------------------");
-            Console.WriteLine("Enrollment Details:");
-            Console.WriteLine("Student ID: " + student.id);
-            Console.WriteLine("Student Name: " + student.name);
-            Console.WriteLine("Student DOB: " + student.dateOfBirth);
-            Console.WriteLine("Course ID: " + course.id);
-            Console.WriteLine("Course Name: " + course.name);
-            Console.WriteLine("Enrollment Date: " + enrollmentDate);
-        }
-
-    }
-
-    class AppEngine
-    {
-        private List<Student> students = new List<Student>();
-        private List<Course> courses = new List<Course> { new Course(1, "Computer Science"), new Course(2, "electronics"), };
-        private List<Enroll> enrollments = new List<Enroll>();
-
-        public void introduce(Course course)
-        {
-            courses.Add(course);
-        }
-
-        public void register(Student student)
-        {
-            students.Add(student);
-        }
-
-        public Student[] listOfStudents()
-        {
-            return students.ToArray();
-        }
-
-        public Course[] listOfCourses()
-        {
-            return courses.ToArray();
-        }
-
-        public void enroll(Student student, Course course, DateTime enrollmentDate)
-        {
-            enrollments.Add(new Enroll(student, course, enrollmentDate));
-        }
-
-        public Enroll[] listOfEnrollments()
-        {
-            return enrollments.ToArray();
-        }
-    }
-
+ 
     public interface UserInterface
     {
         void showFirstScreen();
@@ -133,9 +72,6 @@ namespace CaseStudy
 
     public class StudentManagementSystem : UserInterface
     {
-        AppEngine appEngine = new AppEngine();
-        Info info = new Info();
-
         public void showFirstScreen()
         {
             Console.WriteLine("Welcome to SMS(Student Mgmt. System) v1.0");
@@ -159,10 +95,30 @@ namespace CaseStudy
             Console.WriteLine("Welcome, Student!");
             Console.WriteLine("---------------------------------------------");
             Console.WriteLine("Available Courses:");
-            foreach (Course course in appEngine.listOfCourses())
+
+            try
             {
-                Console.WriteLine($"Course ID: {course.id}, Course Name: {course.name}");
+                using (SqlConnection con = new SqlConnection("Data Source=ICS-LT-FFRSBN3; Initial Catalog=CasestudyDB; Integrated Security=True"))
+                {
+                    con.Open();
+
+                    using (SqlCommand cmd = new SqlCommand("SELECT id, name FROM Courses", con))
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            int id = reader.GetInt32(0);
+                            string name = reader.GetString(1);
+                            Console.WriteLine($"Course ID: {id}, Course Name: {name}");
+                        }
+                    }
+                }
             }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e);
+            }
+
             Console.WriteLine("---------------------------------------------");
         }
 
@@ -174,11 +130,13 @@ namespace CaseStudy
             while (true)
             {
                 Console.WriteLine("Admin Menu:");
-                Console.WriteLine("1. Register and Enroll Student for course");
-                Console.WriteLine("2. Introduce Course");
-                Console.WriteLine("3. View All Students");
-                Console.WriteLine("4. View All Courses");
-                Console.WriteLine("5. Exit");
+                Console.WriteLine("1. Introduce new Student");
+                Console.WriteLine("2. Register and Enroll Student for course");
+                Console.WriteLine("3. Introduce Course");
+                Console.WriteLine("4. View All Students");
+                Console.WriteLine("5. View All Courses");
+                Console.WriteLine("6. view Enrollment details");
+                Console.WriteLine("7. Exit");
 
                 Console.Write("Enter your choice: ");
 
@@ -197,19 +155,24 @@ namespace CaseStudy
                 switch (choice)
                 {
                     case 1:
-                        showStudentRegistrationScreen();
+                        introduceStudent();
                         break;
                     case 2:
-                        introduceNewCourseScreen();
+                        showStudentRegistrationScreen();
                         break;
                     case 3:
-                        showAllStudentsScreen();
+                        introduceNewCourseScreen();
                         break;
                     case 4:
+                        showAllStudentsScreen();
+                        break;
+                    case 5:
                         showAllCoursesScreen();
                         break;
-
-                    case 5:
+                    case 6:
+                        showEnrollments();
+                        break;
+                    case 7:
                         Console.WriteLine("Exiting Admin Menu.");
                         return;
                     default:
@@ -218,62 +181,163 @@ namespace CaseStudy
                 }
             }
         }
+        public void introduceStudent()
+        {
+            Console.WriteLine("Introduce a New Student:");
 
+            Console.Write("Enter student ID: ");
+            int id = int.Parse(Console.ReadLine());
+
+            Console.Write("Enter student Name: ");
+            string name = Console.ReadLine();
+
+            Console.Write("Enter Student Date Of Birth (YYYY-MM-DD): ");
+            DateTime dateOfBirth = DateTime.Parse(Console.ReadLine());
+
+            try
+            {
+                using (SqlConnection con = new SqlConnection("Data Source=ICS-LT-FFRSBN3; Initial Catalog=CasestudyDB; Integrated Security=True"))
+                {
+                    con.Open();
+
+                    using (SqlCommand cmd = new SqlCommand("INSERT INTO Students (id, name, dateOfBirth) VALUES (@id, @name, @dateOfBirth)", con))
+                    {
+                        cmd.Parameters.AddWithValue("@id", id);
+                        cmd.Parameters.AddWithValue("@name", name);
+                        cmd.Parameters.AddWithValue("@dateOfBirth", dateOfBirth);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    Console.WriteLine("Student introduced successfully!");
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e);
+            }
+        }
         public void showStudentRegistrationScreen()
         {
             Console.WriteLine("Student Registration:");
 
             Console.Write("Enter student ID: ");
-            int ID = int.Parse(Console.ReadLine());
+            int studentID = int.Parse(Console.ReadLine());
             Console.Write("Enter student Name: ");
-            string Name = Console.ReadLine();
-            Console.Write("Enter Student Date Of Birth: ");
-            DateTime DOB = Convert.ToDateTime(Console.ReadLine());
+            string studentName = Console.ReadLine();
+            //Console.Write("Enter Student Date Of Birth (YYYY-MM-DD): ");
+            //DateTime studentDOB = DateTime.Parse(Console.ReadLine());
+
 
             Console.Write("Enter Course ID: ");
-            int CID = int.Parse(Console.ReadLine());
+            int courseID = int.Parse(Console.ReadLine());
             Console.Write("Enter Course Name: ");
-            string CName = Console.ReadLine();
+            string courseName = Console.ReadLine();
 
-            Student newStudent = new Student(ID, Name, DOB);
-            Course Course = new Course(CID, CName);
+            Console.WriteLine("Enter enrollment id");
+            int EnrollId = Convert.ToInt32(Console.ReadLine());
 
-            appEngine.register(newStudent);
-
-            appEngine.enroll(newStudent, Course, DateTime.Now);
-
-            foreach (Enroll enrollment in appEngine.listOfEnrollments())
+            try
             {
-                info.display(enrollment);
+                using (SqlConnection con = new SqlConnection("Data Source=ICS-LT-FFRSBN3; Initial Catalog=CasestudyDB; Integrated Security=True"))
+                {
+                    con.Open();
+
+                    //using (SqlCommand studentCmd = new SqlCommand("INSERT INTO Students (id, name, dateOfBirth) VALUES (@studentID, @studentName, @studentDOB)", con))
+                    //{
+                    //    studentCmd.Parameters.AddWithValue("@studentID", studentID);
+                    //    studentCmd.Parameters.AddWithValue("@studentName", studentName);
+                    //    studentCmd.Parameters.AddWithValue("@studentDOB", studentDOB);
+                    //    studentCmd.ExecuteNonQuery();
+                    //}
+
+                    //using (SqlCommand courseCmd = new SqlCommand("INSERT INTO Courses (id, name) VALUES (@courseID, @courseName)", con))
+                    //{
+                    //    courseCmd.Parameters.AddWithValue("@courseID", courseID);
+                    //    courseCmd.Parameters.AddWithValue("@courseName", courseName);
+                    //    courseCmd.ExecuteNonQuery();
+                    //}
+
+                    using (SqlCommand enrollCmd = new SqlCommand("INSERT INTO Enrollments (Enrollmentid, studentId, studentname, courseId, coursename, enrollmentDate) VALUES (@Enrollmentid, @studentID, @studentname, @courseID, @coursename, @enrollmentDate)", con))
+                    {
+                        enrollCmd.Parameters.AddWithValue("@Enrollmentid", EnrollId);
+                        enrollCmd.Parameters.AddWithValue("@studentID", studentID);
+                        enrollCmd.Parameters.AddWithValue("@studentname", studentName);
+                        enrollCmd.Parameters.AddWithValue("@courseID", courseID);
+                        enrollCmd.Parameters.AddWithValue("@coursename", courseName);
+                        enrollCmd.Parameters.AddWithValue("@enrollmentDate", DateTime.Now);
+                        enrollCmd.ExecuteNonQuery();
+                    }
+                }
+
+                Console.WriteLine("Student registered successfully and enrolled for the course!");
+                Console.WriteLine("------------------------------------");
             }
-
-            Console.WriteLine("Student registered successfully!");
-            Console.WriteLine("------------------------------------");
+            catch (SqlException e)
+            {
+                Console.WriteLine(e);
+            }
         }
-
         public void introduceNewCourseScreen()
         {
             Console.WriteLine("Course Introduction:");
 
             Console.Write("Enter Course ID: ");
-            int CID = int.Parse(Console.ReadLine());
+            int courseID = int.Parse(Console.ReadLine());
             Console.Write("Enter Course Name: ");
-            string CName = Console.ReadLine();
+            string courseName = Console.ReadLine();
 
-            Course newCourse = new Course(CID, CName);
-            appEngine.introduce(newCourse);
+            try
+            {
+                using (SqlConnection con = new SqlConnection("Data Source=ICS-LT-FFRSBN3; Initial Catalog=CasestudyDB; Integrated Security=True"))
+                {
+                    con.Open();
 
-            Console.WriteLine("Course introduced successfully!");
+                    using (SqlCommand cmd = new SqlCommand("INSERT INTO Courses (id, name) VALUES (@courseID, @courseName)", con))
+                    {
+                        cmd.Parameters.AddWithValue("@courseID", courseID);
+                        cmd.Parameters.AddWithValue("@courseName", courseName);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                Console.WriteLine("Course introduced successfully!");
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e);
+            }
         }
         public void showAllStudentsScreen()
         {
             Console.WriteLine("-----------------------");
             Console.WriteLine("Registered Students:");
-            foreach (Student student in appEngine.listOfStudents())
-            {
-                info.display(student);
 
+            try
+            {
+                using (SqlConnection con = new SqlConnection("Data Source=ICS-LT-FFRSBN3; Initial Catalog=CasestudyDB; Integrated Security=True"))
+                {
+                    con.Open();
+
+                    using (SqlCommand cmd = new SqlCommand("SELECT id, name, dateOfBirth FROM Students", con))
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            //int id = reader.GetInt32(0);
+                            //string name = reader.GetString(1);
+                            //DateTime dateOfBirth = reader.GetDateTime(2);
+                            Console.WriteLine("Student ID: " + reader[0]);
+                            Console.WriteLine("Student Name: " + reader[1]);
+                            Console.WriteLine("Student Date of Birth: " + reader.GetDateTime(2));
+                        }
+                    }
+                }
             }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e);
+            }
+
             Console.WriteLine("------------------------");
         }
 
@@ -282,23 +346,70 @@ namespace CaseStudy
             Console.WriteLine("--------------------------");
             Console.WriteLine("All Courses:");
 
-            foreach (Course course in appEngine.listOfCourses())
+            try
             {
-                Console.WriteLine("Course ID: " + course.id);
-                Console.WriteLine("Course Name: " + course.name);
+                using (SqlConnection con = new SqlConnection("Data Source=ICS-LT-FFRSBN3; Initial Catalog=CasestudyDB; Integrated Security=True"))
+                {
+                    con.Open();
+
+                    using (SqlCommand cmd = new SqlCommand("SELECT id, name FROM Courses", con))
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            //int id = reader.GetInt32(0);
+                            //string name = reader.GetString(1);
+                            Console.WriteLine("Course ID: " + reader[0]);
+                            Console.WriteLine("Course Name: " + reader[1]);
+                        }
+                    }
+                }
             }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e);
+            }
+
             Console.WriteLine("--------------------------");
         }
-    }
-    class App
-    {
-        static void Main(string[] args)
+        public void showEnrollments()
         {
-            //StudentManagementSystem studentmanagementsystem = new StudentManagementSystem();
-            //studentmanagementsystem.showFirstScreen();
+            try
+            {
+                using (SqlConnection con = new SqlConnection("Data Source=ICS-LT-FFRSBN3; Initial Catalog=CasestudyDB; Integrated Security=True"))
+                {
+                    con.Open();
 
-            new StudentManagementSystem().showFirstScreen();
-            Console.ReadLine();
+                    using (SqlCommand cmd = new SqlCommand("SELECT * FROM Enrollments", con))
+                    {
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        if (reader.HasRows)
+                        {
+                            Console.WriteLine("Enrollments:");
+                            Console.WriteLine("Enrollment ID\tStudent ID\tStudent Name\tCourse ID\tCourse Name\tEnrollment Date");
+                            while (reader.Read())
+                            {
+                                int enrollmentId = reader.GetInt32(0);
+                                int studentId = reader.GetInt32(1);
+                                string studentName = reader.GetString(2);
+                                int courseId = reader.GetInt32(3);
+                                string courseName = reader.GetString(4);
+                                DateTime enrollmentDate = reader.GetDateTime(5);
+                                Console.WriteLine($"{enrollmentId}\t\t{studentId}\t\t{studentName}\t\t{courseId}\t\t{courseName}\t\t{enrollmentDate}");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("No enrollments found.");
+                        }
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e);
+            }
         }
     }
+    
 }

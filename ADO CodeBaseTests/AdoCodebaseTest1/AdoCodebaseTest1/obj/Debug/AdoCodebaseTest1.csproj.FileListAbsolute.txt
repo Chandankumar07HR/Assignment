@@ -1,0 +1,7 @@
+D:\DOTNET.ASSIGNMENT\ADO CodeBaseTests\AdoCodebaseTest1\AdoCodebaseTest1\bin\Debug\AdoCodebaseTest1.exe.config
+D:\DOTNET.ASSIGNMENT\ADO CodeBaseTests\AdoCodebaseTest1\AdoCodebaseTest1\bin\Debug\AdoCodebaseTest1.exe
+D:\DOTNET.ASSIGNMENT\ADO CodeBaseTests\AdoCodebaseTest1\AdoCodebaseTest1\bin\Debug\AdoCodebaseTest1.pdb
+D:\DOTNET.ASSIGNMENT\ADO CodeBaseTests\AdoCodebaseTest1\AdoCodebaseTest1\obj\Debug\AdoCodebaseTest1.csproj.AssemblyReference.cache
+D:\DOTNET.ASSIGNMENT\ADO CodeBaseTests\AdoCodebaseTest1\AdoCodebaseTest1\obj\Debug\AdoCodebaseTest1.csproj.CoreCompileInputs.cache
+D:\DOTNET.ASSIGNMENT\ADO CodeBaseTests\AdoCodebaseTest1\AdoCodebaseTest1\obj\Debug\AdoCodebaseTest1.exe
+D:\DOTNET.ASSIGNMENT\ADO CodeBaseTests\AdoCodebaseTest1\AdoCodebaseTest1\obj\Debug\AdoCodebaseTest1.pdb
