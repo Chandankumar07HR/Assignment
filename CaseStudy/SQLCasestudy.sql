@@ -12,14 +12,11 @@ dateOfBirth Date
 select * from Students
 
 
-
 Create table Courses
 (
 id int primary key,	
 name nvarchar(200),
 fees decimal(10, 2));
-
-delete from Courses where id = 202
 
 select * from courses
 
