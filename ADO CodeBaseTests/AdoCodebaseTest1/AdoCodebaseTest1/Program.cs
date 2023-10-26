@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
 
+
 namespace AdoCodebaseTest1
 {
     class Program
@@ -30,15 +31,15 @@ namespace AdoCodebaseTest1
             Console.WriteLine("Enter employee type(F or P): ");
             string empType = Console.ReadLine();
             
-            SqlCommand command = new SqlCommand("AddEmployee", con);
+            cmd = new SqlCommand("AddEmployee", con);
 
-            command.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
             
-            command.Parameters.Add(new SqlParameter("@empname", empName));
-            command.Parameters.Add(new SqlParameter("@empsal", empSal));
-            command.Parameters.Add(new SqlParameter("@emptype", empType));
+            cmd.Parameters.Add(new SqlParameter("@empname", empName));
+            cmd.Parameters.Add(new SqlParameter("@empsal", empSal));
+            cmd.Parameters.Add(new SqlParameter("@emptype", empType));
 
-            int res = command.ExecuteNonQuery();
+            int res = cmd.ExecuteNonQuery();
             if (res > 0)
                 Console.WriteLine("Record Inserted");
             else
@@ -57,7 +58,6 @@ namespace AdoCodebaseTest1
         }
         static SqlConnection GetConnection()
         {
-            //when windows authenticated
             con = new SqlConnection("Data Source=ICS-LT-FFRSBN3; Initial Catalog=CodeBaseTestdb; Integrated Security=True");
             con.Open();
             return con;

@@ -17,48 +17,30 @@ namespace CaseStudy
             Console.ReadLine();
         }
     }
-   
+
     public class Student
     {
         public int id { get; set; }
         public string name { get; set; }
         public DateTime dateOfBirth { get; set; }
 
-        public Student(int id, string name, DateTime dateOfBirth)
-        {
-            this.id = id;
-            this.name = name;
-            this.dateOfBirth = dateOfBirth;
-        }
     }
 
     public class Course
     {
         public int id { get; set; }
         public string name { get; set; }
+        public decimal fees { get; set; }
 
-        public Course(int id, string name)
-        {
-            this.id = id;
-            this.name = name;
-        }
     }
-
-    class Enroll
+    class Enrollment
     {
-        public Student student;
-        public Course course;
-        public DateTime enrollmentDate;
-        public Enroll(Student student, Course course, DateTime enrollmentDate)
-        {
-            this.student = student;
-            this.course = course;
-            this.enrollmentDate = enrollmentDate;
-        }
+        public Student student { get; set; }
+        public Course course { get; set; }
+        public DateTime enrollmentDate { get; set; }
 
     }
 
- 
     public interface UserInterface
     {
         void showFirstScreen();
@@ -102,14 +84,15 @@ namespace CaseStudy
                 {
                     con.Open();
 
-                    using (SqlCommand cmd = new SqlCommand("SELECT id, name FROM Courses", con))
+                    using (SqlCommand cmd = new SqlCommand("SELECT id, name, fees FROM Courses", con))
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
                         {
                             int id = reader.GetInt32(0);
                             string name = reader.GetString(1);
-                            Console.WriteLine($"Course ID: {id}, Course Name: {name}");
+                            decimal fees = reader.GetDecimal(2);
+                            Console.WriteLine($"Course ID: {id}, Course Name: {name}, Course Fees: {fees}");
                         }
                     }
                 }
@@ -130,13 +113,14 @@ namespace CaseStudy
             while (true)
             {
                 Console.WriteLine("Admin Menu:");
-                Console.WriteLine("1. Introduce new Student");
-                Console.WriteLine("2. Register and Enroll Student for course");
-                Console.WriteLine("3. Introduce Course");
-                Console.WriteLine("4. View All Students");
-                Console.WriteLine("5. View All Courses");
+                Console.WriteLine("1. Introduce new Student");               
+                Console.WriteLine("2. Introduce Course");
+                Console.WriteLine("3. View All Students");
+                Console.WriteLine("4. View All Courses");
+                Console.WriteLine("5. Register and Enroll Student for course");
                 Console.WriteLine("6. view Enrollment details");
-                Console.WriteLine("7. Exit");
+                Console.WriteLine("7. Update enrollment details");
+                Console.WriteLine("8. Exit");
 
                 Console.Write("Enter your choice: ");
 
@@ -158,21 +142,26 @@ namespace CaseStudy
                         introduceStudent();
                         break;
                     case 2:
-                        showStudentRegistrationScreen();
-                        break;
-                    case 3:
                         introduceNewCourseScreen();
                         break;
-                    case 4:
+                    case 3:
                         showAllStudentsScreen();
                         break;
-                    case 5:
+                    case 4:
                         showAllCoursesScreen();
+                        break;
+                    case 5:
+                        showStudentRegistrationScreen();
                         break;
                     case 6:
                         showEnrollments();
+
                         break;
                     case 7:
+                        updateEnrollmentDetails();
+
+                        break;
+                    case 8:
                         Console.WriteLine("Exiting Admin Menu.");
                         return;
                     default:
@@ -216,67 +205,7 @@ namespace CaseStudy
                 Console.WriteLine(e);
             }
         }
-        public void showStudentRegistrationScreen()
-        {
-            Console.WriteLine("Student Registration:");
-
-            Console.Write("Enter student ID: ");
-            int studentID = int.Parse(Console.ReadLine());
-            Console.Write("Enter student Name: ");
-            string studentName = Console.ReadLine();
-            //Console.Write("Enter Student Date Of Birth (YYYY-MM-DD): ");
-            //DateTime studentDOB = DateTime.Parse(Console.ReadLine());
-
-
-            Console.Write("Enter Course ID: ");
-            int courseID = int.Parse(Console.ReadLine());
-            Console.Write("Enter Course Name: ");
-            string courseName = Console.ReadLine();
-
-            Console.WriteLine("Enter enrollment id");
-            int EnrollId = Convert.ToInt32(Console.ReadLine());
-
-            try
-            {
-                using (SqlConnection con = new SqlConnection("Data Source=ICS-LT-FFRSBN3; Initial Catalog=CasestudyDB; Integrated Security=True"))
-                {
-                    con.Open();
-
-                    //using (SqlCommand studentCmd = new SqlCommand("INSERT INTO Students (id, name, dateOfBirth) VALUES (@studentID, @studentName, @studentDOB)", con))
-                    //{
-                    //    studentCmd.Parameters.AddWithValue("@studentID", studentID);
-                    //    studentCmd.Parameters.AddWithValue("@studentName", studentName);
-                    //    studentCmd.Parameters.AddWithValue("@studentDOB", studentDOB);
-                    //    studentCmd.ExecuteNonQuery();
-                    //}
-
-                    //using (SqlCommand courseCmd = new SqlCommand("INSERT INTO Courses (id, name) VALUES (@courseID, @courseName)", con))
-                    //{
-                    //    courseCmd.Parameters.AddWithValue("@courseID", courseID);
-                    //    courseCmd.Parameters.AddWithValue("@courseName", courseName);
-                    //    courseCmd.ExecuteNonQuery();
-                    //}
-
-                    using (SqlCommand enrollCmd = new SqlCommand("INSERT INTO Enrollments (Enrollmentid, studentId, studentname, courseId, coursename, enrollmentDate) VALUES (@Enrollmentid, @studentID, @studentname, @courseID, @coursename, @enrollmentDate)", con))
-                    {
-                        enrollCmd.Parameters.AddWithValue("@Enrollmentid", EnrollId);
-                        enrollCmd.Parameters.AddWithValue("@studentID", studentID);
-                        enrollCmd.Parameters.AddWithValue("@studentname", studentName);
-                        enrollCmd.Parameters.AddWithValue("@courseID", courseID);
-                        enrollCmd.Parameters.AddWithValue("@coursename", courseName);
-                        enrollCmd.Parameters.AddWithValue("@enrollmentDate", DateTime.Now);
-                        enrollCmd.ExecuteNonQuery();
-                    }
-                }
-
-                Console.WriteLine("Student registered successfully and enrolled for the course!");
-                Console.WriteLine("------------------------------------");
-            }
-            catch (SqlException e)
-            {
-                Console.WriteLine(e);
-            }
-        }
+       
         public void introduceNewCourseScreen()
         {
             Console.WriteLine("Course Introduction:");
@@ -285,6 +214,8 @@ namespace CaseStudy
             int courseID = int.Parse(Console.ReadLine());
             Console.Write("Enter Course Name: ");
             string courseName = Console.ReadLine();
+            Console.Write("Enter the Course fee: ");
+            decimal coursefee = Convert.ToDecimal(Console.ReadLine());
 
             try
             {
@@ -292,10 +223,11 @@ namespace CaseStudy
                 {
                     con.Open();
 
-                    using (SqlCommand cmd = new SqlCommand("INSERT INTO Courses (id, name) VALUES (@courseID, @courseName)", con))
+                    using (SqlCommand cmd = new SqlCommand("INSERT INTO Courses (id, name, fees) VALUES (@courseID, @courseName, @courseFee)", con))
                     {
                         cmd.Parameters.AddWithValue("@courseID", courseID);
                         cmd.Parameters.AddWithValue("@courseName", courseName);
+                        cmd.Parameters.AddWithValue("@courseFee", coursefee);
                         cmd.ExecuteNonQuery();
                     }
                 }
@@ -352,7 +284,7 @@ namespace CaseStudy
                 {
                     con.Open();
 
-                    using (SqlCommand cmd = new SqlCommand("SELECT id, name FROM Courses", con))
+                    using (SqlCommand cmd = new SqlCommand("SELECT id, name, fees FROM Courses", con))
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
@@ -361,6 +293,7 @@ namespace CaseStudy
                             //string name = reader.GetString(1);
                             Console.WriteLine("Course ID: " + reader[0]);
                             Console.WriteLine("Course Name: " + reader[1]);
+                            Console.WriteLine("Course Fees: "+ reader[2]);
                         }
                     }
                 }
@@ -371,6 +304,59 @@ namespace CaseStudy
             }
 
             Console.WriteLine("--------------------------");
+        }
+        public void showStudentRegistrationScreen()
+        {
+            Console.WriteLine("Student Registration:");
+
+            Console.Write("Enter student ID: ");
+            int studentID = int.Parse(Console.ReadLine());
+            Console.Write("Enter student Name: ");
+            string studentName = Console.ReadLine();
+
+
+
+            Console.Write("Enter Course ID: ");
+            int courseID = int.Parse(Console.ReadLine());
+            Console.Write("Enter Course Name: ");
+            string courseName = Console.ReadLine();
+            Console.Write("Enter Course Fees: ");
+            decimal courseFees = Convert.ToDecimal(Console.ReadLine());
+
+
+
+            try
+            {
+                using (SqlConnection con = new SqlConnection("Data Source=ICS-LT-FFRSBN3; Initial Catalog=CasestudyDB; Integrated Security=True"))
+                {
+                    con.Open();
+
+
+                    using (SqlCommand enrollCmd = new SqlCommand("INSERT INTO Enrollments (studentId, studentname, courseId, coursename, coursefees, enrollmentDate) VALUES (@studentID, @studentname, @courseID, @coursename, @coursefees, @enrollmentDate)", con))
+
+                    //using (SqlCommand enrollCmd = new SqlCommand("INSERT INTO Enrollments (Enrollmentid, studentId, studentname, courseId, coursename, coursefees, enrollmentDate) VALUES (@Enrollmentid, @studentID, @studentname, @courseID, @coursename, @coursefees, @enrollmentDate)", con))
+
+                    {
+
+
+                        //enrollCmd.Parameters.AddWithValue("@Enrollmentid", EnrollId);
+                        enrollCmd.Parameters.AddWithValue("@studentID", studentID);
+                        enrollCmd.Parameters.AddWithValue("@studentname", studentName);
+                        enrollCmd.Parameters.AddWithValue("@courseID", courseID);
+                        enrollCmd.Parameters.AddWithValue("@coursename", courseName);
+                        enrollCmd.Parameters.AddWithValue("@coursefees", courseFees);
+                        enrollCmd.Parameters.AddWithValue("@enrollmentDate", DateTime.Now);
+                        enrollCmd.ExecuteNonQuery();
+                    }
+                }
+
+                Console.WriteLine("Student registered successfully and enrolled for the course!");
+                Console.WriteLine("------------------------------------");
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e);
+            }
         }
         public void showEnrollments()
         {
@@ -386,7 +372,8 @@ namespace CaseStudy
                         if (reader.HasRows)
                         {
                             Console.WriteLine("Enrollments:");
-                            Console.WriteLine("Enrollment ID\tStudent ID\tStudent Name\tCourse ID\tCourse Name\tEnrollment Date");
+                            Console.WriteLine("{0,-15}{1,-10}{2,-20}{3,-10}{4,-20}{5,-15}{6,-20}", "Enrollment ID", "Student ID", "Student Name", "Course ID", "Course Name", "Course Fees", "Enrollment Date");
+
                             while (reader.Read())
                             {
                                 int enrollmentId = reader.GetInt32(0);
@@ -394,13 +381,59 @@ namespace CaseStudy
                                 string studentName = reader.GetString(2);
                                 int courseId = reader.GetInt32(3);
                                 string courseName = reader.GetString(4);
-                                DateTime enrollmentDate = reader.GetDateTime(5);
-                                Console.WriteLine($"{enrollmentId}\t\t{studentId}\t\t{studentName}\t\t{courseId}\t\t{courseName}\t\t{enrollmentDate}");
+                                decimal courseFees = reader.GetDecimal(5);
+                                DateTime enrollmentDate = reader.GetDateTime(6);
+                                Console.WriteLine("{0,-15}{1,-10}{2,-20}{3,-10}{4,-20}{5,-15}{6,-20}", enrollmentId, studentId, studentName, courseId, courseName, courseFees, enrollmentDate);
                             }
                         }
                         else
                         {
                             Console.WriteLine("No enrollments found.");
+                        }
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+        public void updateEnrollmentDetails()
+        {
+            Console.WriteLine("Update Enrollment Details:");
+            Console.Write("Enter Enrollment ID: ");
+            int enrollmentID = int.Parse(Console.ReadLine());
+            Console.Write("Enter new Student ID: ");
+            int newStudentID = int.Parse(Console.ReadLine());
+            Console.Write("Enter new Student Name: ");
+            string newStudentName = Console.ReadLine();
+            Console.Write("Enter new Course ID: ");
+            int newCourseID = int.Parse(Console.ReadLine());
+            Console.Write("Enter new Course Name: ");
+            string newCourseName = Console.ReadLine();
+            Console.Write("Enter new Course Fees: ");
+            decimal newCourseFees = Convert.ToDecimal(Console.ReadLine());
+            try
+            {
+                using (SqlConnection con = new SqlConnection("Data Source=ICS-LT-FFRSBN3; Initial Catalog=CasestudyDB; Integrated Security=True"))
+                {
+                    con.Open();
+                    using (SqlCommand updateCmd = new SqlCommand("UPDATE Enrollments SET studentId = @newStudentID, studentname=@newStudentName, courseId = @newCourseID, coursename = @newCourseName, coursefees = @newCourseFees WHERE Enrollmentid = @enrollmentID", con))
+                    {
+                        updateCmd.Parameters.AddWithValue("@enrollmentID", enrollmentID);
+                        updateCmd.Parameters.AddWithValue("@newStudentID", newStudentID);
+                        updateCmd.Parameters.AddWithValue("@newStudentName", newStudentName);
+                        updateCmd.Parameters.AddWithValue("@newCourseID", newCourseID);
+                        updateCmd.Parameters.AddWithValue("@newCourseName", newCourseName);
+                        updateCmd.Parameters.AddWithValue("@newCourseFees", newCourseFees);
+                        int rowsAffected = updateCmd.ExecuteNonQuery();
+                        if (rowsAffected > 0)
+                        {
+                            Console.WriteLine("Enrollment details updated successfully!");
+                        }
+                        else
+                        {
+                            Console.WriteLine("No enrollment found with the provided Enrollment ID.");
                         }
                     }
                 }

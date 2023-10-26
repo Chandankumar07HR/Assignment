@@ -9,36 +9,45 @@ name nvarchar(200),
 dateOfBirth Date
 );
 
-select id as 'Student ID', name as 'Student name' from Students
+select * from Students
+
 
 
 Create table Courses
 (
-id int primary key,
-name nvarchar(200));
+id int primary key,	
+name nvarchar(200),
+fees decimal(10, 2));
 
-select id as Cource_Id, name as CourseName from Courses
+delete from Courses where id = 202
+
+select * from courses
 
 Create table Enrollments
 (
-Enrollmentid int primary key,
+Enrollmentid int IDENTITY(301, 1) primary key,
 studentId int,
 studentname varchar(200),
 courseId int,
 coursename varchar(200),
+coursefees decimal(10,2),
 enrollmentDate DATETIME
+foreign key(studentId) references Students(id),
+foreign key(courseId) references Courses(id),
+unique(studentId,courseId)
 );
---foreign key(studentId) references Students(id),
---foreign key(courseId) references Courses(id)
 
 
-
-
+select id as StudentID, name as StudentName from Students
+select id as CourseId, name as CourseName from courses
 select * from Enrollments
-delete from Students where id=1
-delete from Courses where id =1
 
-delete from Enroll
+
+
+
+
+
+
 
 
 
