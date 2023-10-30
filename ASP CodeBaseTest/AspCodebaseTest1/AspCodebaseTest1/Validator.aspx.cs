@@ -13,5 +13,17 @@ namespace AspCodebaseTest1
         {
 
         }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            if (Page.IsValid)
+            {
+                Response.Redirect("validation.html");
+            }
+            else
+            {
+                Response.Write("validation failed. re attmept again..");
+            }
+        }
     }
 }
