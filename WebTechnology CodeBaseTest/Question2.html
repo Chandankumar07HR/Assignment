@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Odd or Even Numbers</title>
+<style>
+body {
+    text-align: left;
+}
+input {
+ width: 200px;
+ margin: 5px;
+}
+button {
+ background-color: white;
+ color: black;
+ padding: 10px;
+ margin: 5px;
+}
+#result {
+ font-size: 20px;
+}
+</style>
+</head>
+<body>
+
+<script>
+function checkNumber()
+{
+    var number = document.getElementById("numberInput").value;
+ 
+if (number >= 0 && number <= 15)
+{ 
+   if (number % 2 === 0)
+    {
+     document.getElementById("result").innerHTML = number + " is even";
+    } 
+   else 
+   {
+     document.getElementById("result").innerHTML = number + " is odd";
+   }
+ } 
+ else 
+ {
+   document.getElementById("result").innerHTML = "The number must be between 0 and 15";
+ }
+}
+</script>
+<h1>Odd or Even Numbers</h1>
+<input type="number" id="numberInput" placeholder="Enter a number from 0 to 15">
+<button onclick="checkNumber()">CHECK</button>
+<p id="result"></p>
+</body>
+</html>
