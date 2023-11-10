@@ -1,0 +1,19 @@
+﻿@model List<DatabaseFirst_Customers_CodebaseTest.Models.Customer>
+@{
+    ViewBag.Title = "CustomerDetailsinOrder";
+}
+
+<h2>CustomerDetailsinOrder</h2>
+
+<h2>Customer Details for OrderID 10248</h2>
+<table>
+    <!-- Display customer details here -->
+    @foreach (var customer in Model)
+    {
+        <tr>
+            <td>@customer.CustomerID</td>
+            <td>@customer.ContactName</td>
+            <!-- Add other properties as needed -->
+        </tr>
+}
+</table>

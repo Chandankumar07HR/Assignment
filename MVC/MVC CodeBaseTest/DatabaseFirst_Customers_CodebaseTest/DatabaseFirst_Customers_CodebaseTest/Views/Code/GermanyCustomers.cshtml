@@ -1,0 +1,37 @@
+﻿@model IEnumerable<DatabaseFirst_Customers_CodebaseTest.Models.Customer>
+@{
+    ViewBag.Title = "GermanyCustomers";
+}
+
+<h2>Customers in Germany</h2>
+
+<h2>GetCategoryDetails</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th style="color:Red">
+                Customer ID
+            </th>
+            <th style="color:Red">
+                Contact Name
+            </th>
+            <th style="color:Red">
+                Phone
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>@item.CustomerID</td>
+            <td>@item.ContactName</td>
+            <td>@item.Phone</td>
+
+        </tr>
+        }
+    </tbody>
+
+</table>
+
+
