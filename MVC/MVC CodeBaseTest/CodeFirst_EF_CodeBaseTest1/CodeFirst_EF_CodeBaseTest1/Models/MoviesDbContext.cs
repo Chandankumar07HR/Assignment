@@ -7,7 +7,7 @@ namespace CodeFirst_EF_CodeBaseTest1.Models
 {
     public class MoviesDbContext : DbContext
     {
-        public MoviesDbContext() : base("name=connectstr")
+        public MoviesDbContext() : base("connectstr")
         {
 
         }

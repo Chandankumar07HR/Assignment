@@ -1,16 +1,13 @@
 ﻿@model IEnumerable<CodeFirst_EF_CodeBaseTest1.Models.Movie>
-@{ ViewBag.Title = "Index"; }
-<h2>Index</h2>
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+@{ ViewBag.Title = "MoviesByYear"; }
+<h2>Movies Released in Year</h2>
 <table class="table">
     <tr>
         <th>
-            Movie Name
+            @Html.DisplayNameFor(model => model.MovieName)
         </th>
         <th>
-            Date of Release
+            @Html.DisplayNameFor(model => model.DateOfRelease)
         </th>
         <th></th>
     </tr>
@@ -24,9 +21,8 @@
         @Html.DisplayFor(modelItem => item.DateOfRelease)
     </td>
     <td>
-        @Html.ActionLink("Edit", "Edit", new { id = item.Mid }) |
         @Html.ActionLink("Details", "Details", new { id = item.Mid }) |
-        @Html.ActionLink("Delete", "Delete", new { id = item.Mid })
+        <!-- Add more actions if needed -->
     </td>
 </tr>}
 </table>
