@@ -9,6 +9,7 @@ namespace CodeFirst_EF_CodeBaseTest1.Models.Repository
 
     {
         IEnumerable<T> GetAll();
+
         T GetById(object Id); // find an occurence of the given type
        
         void Insert(T obj);

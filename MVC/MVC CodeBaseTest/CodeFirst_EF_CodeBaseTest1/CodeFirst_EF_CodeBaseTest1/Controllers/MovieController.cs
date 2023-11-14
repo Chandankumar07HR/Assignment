@@ -81,8 +81,12 @@ namespace CodeFirst_EF_CodeBaseTest1.Controllers
             _repository.Save();
             return RedirectToAction("Index");
         }
+        public ActionResult MoviesByYear(int year=2023)
+        {
+            var moviesInYear = _repository.GetAll().Where(m => m.DateOfRelease.Year == year).ToList();
+            return View(moviesInYear);
+        }
 
-      
-        
+
     }
 }
